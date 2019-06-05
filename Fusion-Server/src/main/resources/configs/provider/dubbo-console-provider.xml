@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--menuProvider-->
+    <bean id="menuProvider" class="com.fusion.manage.provider.console.MenuProviderImpl"/>
+    <dubbo:service interface="com.fusion.manage.provider.console.MenuProvider" ref="menuProvider"
+                   retries="0" protocol="dubbo"/>
+
+    <!--userProvider-->
+    <bean id="userProvider" class="com.fusion.manage.provider.console.UserProviderImpl"/>
+    <dubbo:service interface="com.fusion.manage.provider.console.UserProvider" ref="userProvider"
+                   retries="0" protocol="dubbo"/>
+
+    <!--systemParamProvider-->
+    <bean id="systemParamProvider" class="com.fusion.manage.provider.console.SystemParamProviderImpl"/>
+    <dubbo:service interface="com.fusion.manage.provider.console.SystemParamProvider" ref="systemParamProvider"
+                   retries="0" protocol="dubbo"/>
+
+    <!--systemParamCatalogProvider-->
+    <bean id="systemParamCatalogProvider" class="com.fusion.manage.provider.console.SystemParamCatalogProviderImpl"/>
+    <dubbo:service interface="com.fusion.manage.provider.console.SystemParamCatalogProvider" ref="systemParamCatalogProvider"
+                   retries="0" protocol="dubbo"/>
+
+</beans>

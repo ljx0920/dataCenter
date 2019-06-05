@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Fusion-Stage" default="all" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+    <property name="compiler.debug" value="on"/>
+
+    <property name="mvn.home" value="D:/JavaTools/apache-maven-3.3.9"/>
+    <property name="mvn.repos" value="D:/MavenRepository"/>
+
+
+    <property name="build.home" value="./Fusion-Stage"/>
+    <property name="jdkpath" value="${JAVA_HOME}"/>
+    <echo message="java version = ${ant.java.version}"/>
+
+    <echo>============================================</echo>
+    <echo>===== 默认Ant Target，将会编译Fusion-Stage组件=====</echo>
+    <echo>============================================</echo>
+
+    <property name="common" value="${basedir}/${build.home}/common"/>
+    <property name="common.jar" value="Fusion-Common-1.0.jar"/>
+
+    <property name="domain" value="${basedir}/${build.home}/domain"/>
+    <property name="domain.jar" value="Fusion-Domain-1.0.jar"/>
+
+    <target name="all" depends="clean,common,domain,restful,server,engine"/>
+
+
+    <!-- Fusion-Common -->
+    <target name="common">
+        <property name="common.pom.file" value="./Fusion-Common/pom.xml"/>
+        <property name="common.target.classes" value="./Fusion-Common/target/classes"/>
+
+        <mkdir dir="${common}"/>
+
+        <artifact:pom id="common.pom" file="${common.pom.file}"/>
+        <artifact:dependencies filesetId="common.fileset" useScope="compile">
+            <localrepository path="${mvn.repos}"/>
+            <pom refid="common.pom"/>
+        </artifact:dependencies>
+
+        <jar destfile="${common}/${common.jar}">
+            <fileset dir="${common.target.classes}"/>
+        </jar>
+        <echo message="########  Fusion-Common package successful ################"/>
+    </target>
+
+    <!-- Fusion-Domain -->
+    <target name="domain">
+
+        <property name="domain.pom.file" value="./Fusion-Domain/pom.xml"/>
+        <property name="domain.target.classes" value="./Fusion-Domain/target/classes"/>
+
+        <mkdir dir="${domain}"/>
+
+        <artifact:pom id="domain.pom" file="${domain.pom.file}"/>
+        <artifact:dependencies filesetId="domain.fileset" useScope="">
+            <localrepository path="${mvn.repos}"/>
+            <pom refid="domain.pom"/>
+        </artifact:dependencies>
+
+        <jar destfile="${domain}/${domain.jar}">
+            <fileset dir="${domain.target.classes}"/>
+        </jar>
+
+        <echo message="########  Fusion-Domain package successful ################"/>
+    </target>
+
+    <!-- Fusion-Restful -->
+    <target name="restful">
+        <property name="restful.resources" value="./Fusion-Restful/src/main/resources/"/>
+        <property name="restful.pom.file" value="./Fusion-Restful/pom.xml"/>
+        <property name="restful.target.classes" value="./Fusion-Restful/target/classes"/>
+        <property name="restful.src" value="./Fusion-Restful/src/main/java"/>
+        <property name="restful.jar" value="Fusion-Restful-1.0.jar"/>
+        <property name="restful.scripts" value="./Fusion-Restful/src/main/resources/bin"/>
+
+
+        <property name="restful" value="${basedir}/${build.home}/Fusion-Restful"/>
+        <property name="restful.bin" value="${restful}/bin/"/>
+        <property name="restful.classes" value="${restful}/classes"/>
+        <property name="restful.lib" value="${restful}/lib/"/>
+        <property name="restful.dest.resources" value="${restful}/resources/"/>
+
+        <mkdir dir="${restful}"/>
+        <mkdir dir="${restful.lib}"/>
+        <mkdir dir="${restful.bin}"/>
+
+        <copy todir="${restful.bin}">
+            <fileset dir="${restful.scripts}" excludes="**/.svn/**/*.*"/>
+        </copy>
+        <copy todir="${restful.dest.resources}">
+            <fileset dir="${restful.resources}" excludes="**/.svn/**/*.*"/>
+        </copy>
+
+        <artifact:pom id="restful.pom" file="${restful.pom.file}"/>
+        <artifact:dependencies filesetId="restful.fileset" useScope="compile">
+            <localrepository path="${mvn.repos}"/>
+            <pom refid="restful.pom"/>
+        </artifact:dependencies>
+
+        <copy todir="${restful.lib}">
+            <fileset refid="restful.fileset"/>
+            <mapper type="flatten"/>
+        </copy>
+
+        <jar destfile="${restful.lib}/${restful.jar}">
+            <fileset dir="${restful.target.classes}"/>
+        </jar>
+
+        <delete file="${restful.lib}/${common.jar}"/>
+        <delete file="${restful.lib}/${domain.jar}"/>
+
+
+        <copy todir="${restful.lib}">
+            <fileset dir="${common}">
+                <include name="${common.jar}"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${restful.lib}">
+            <fileset dir="${domain}">
+                <include name="${domain.jar}"/>
+            </fileset>
+        </copy>
+
+        <delete dir="${restful.dest.resources}bin"/>
+        <delete dir="${restful.classes}"/>
+        <echo message="########  Fusion-restful package successful ################"/>
+    </target>
+
+    <!-- Fusion-Server -->
+    <target name="server">
+        <property name="server.resources" value="./Fusion-Server/src/main/resources/"/>
+        <property name="server.pom.file" value="./Fusion-Server/pom.xml"/>
+        <property name="server.target.classes" value="./Fusion-Server/target/classes"/>
+        <property name="server.src" value="./Fusion-Server/src/main/java"/>
+        <property name="server.jar" value="Fusion-Server-1.0.jar"/>
+        <property name="server.scripts" value="./Fusion-Server/src/main/resources/bin"/>
+
+
+        <property name="server" value="${basedir}/${build.home}/Fusion-Server"/>
+        <property name="server.bin" value="${server}/bin/"/>
+        <property name="server.classes" value="./Fusion-Server/classes"/>
+        <property name="server.lib" value="${server}/lib/"/>
+        <property name="server.dest.resources" value="${server}/resources/"/>
+        <property name="server.dest.webapp" value="${server}/webapp/"/>
+
+        <mkdir dir="${server}"/>
+        <mkdir dir="${server.classes}"/>
+        <mkdir dir="${server.lib}"/>
+        <mkdir dir="${server.bin}"/>
+
+        <copy todir="${server.bin}">
+            <fileset dir="${server.scripts}" excludes="**/.svn/**/*.*"/>
+        </copy>
+        <copy todir="${server.dest.resources}">
+            <fileset dir="${server.resources}" excludes="**/.svn/**/*.*"/>
+        </copy>
+
+
+        <artifact:pom id="server.pom" file="${server.pom.file}"/>
+        <artifact:dependencies filesetId="server.fileset" useScope="compile">
+            <localrepository path="${mvn.repos}"/>
+            <pom refid="server.pom"/>
+        </artifact:dependencies>
+
+        <copy todir="${server.lib}">
+            <fileset refid="server.fileset"/>
+            <mapper type="flatten"></mapper>
+        </copy>
+
+        <jar destfile="${server.lib}/${server.jar}">
+            <fileset dir="${server.target.classes}"/>
+        </jar>
+
+        <delete file="${server.lib}/${common.jar}"/>
+        <delete file="${server.lib}/${domain.jar}"/>
+
+        <copy todir="${server.lib}">
+            <fileset dir="${common}">
+                <include name="${common.jar}"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${server.lib}">
+            <fileset dir="${domain}">
+                <include name="${domain.jar}"/>
+            </fileset>
+        </copy>
+        <echo message="${server.lib}"/>
+
+
+        <delete dir="${server.dest.resources}bin"/>
+        <delete dir="${server.classes}"/>
+        <echo message="########  Fusion-Server  package successful ################"/>
+    </target>
+
+    <!-- Fusion-Engine -->
+    <target name="engine">
+        <property name="engine.resources" value="./Fusion-Engine/src/main/resources/"/>
+        <property name="engine.pom.file" value="./Fusion-Engine/pom.xml"/>
+        <property name="engine.target.classes" value="./Fusion-Engine/target/classes"/>
+        <property name="engine.src" value="./Fusion-Engine/src/main/java"/>
+        <property name="engine.jar" value="Fusion-Engine-1.0.jar"/>
+        <property name="engine.scripts" value="./Fusion-Engine/src/main/resources/bin"/>
+
+
+        <property name="engine" value="${basedir}/${build.home}/Fusion-Engine"/>
+        <property name="engine.bin" value="${engine}/bin/"/>
+        <property name="engine.classes" value="./Fusion-Engine/classes"/>
+        <property name="engine.lib" value="${engine}/lib/"/>
+        <property name="engine.dest.resources" value="${engine}/resources/"/>
+        <property name="engine.dest.webapp" value="${engine}/webapp/"/>
+
+        <mkdir dir="${engine}"/>
+        <mkdir dir="${engine.classes}"/>
+        <mkdir dir="${engine.lib}"/>
+        <mkdir dir="${engine.bin}"/>
+
+        <copy todir="${engine.bin}">
+            <fileset dir="${engine.scripts}" excludes="**/.svn/**/*.*"/>
+        </copy>
+        <copy todir="${engine.dest.resources}">
+            <fileset dir="${engine.resources}" excludes="**/.svn/**/*.*"/>
+        </copy>
+
+
+        <artifact:pom id="engine.pom" file="${engine.pom.file}"/>
+        <artifact:dependencies filesetId="engine.fileset" useScope="compile">
+            <localrepository path="${mvn.repos}"/>
+            <pom refid="engine.pom"/>
+        </artifact:dependencies>
+
+        <copy todir="${engine.lib}">
+            <fileset refid="engine.fileset"/>
+            <mapper type="flatten"></mapper>
+        </copy>
+
+        <jar destfile="${engine.lib}/${engine.jar}">
+            <fileset dir="${engine.target.classes}"/>
+        </jar>
+
+        <delete file="${engine.lib}/${common.jar}"/>
+        <delete file="${engine.lib}/${domain.jar}"/>
+
+        <copy todir="${engine.lib}">
+            <fileset dir="${common}">
+                <include name="${common.jar}"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${engine.lib}">
+            <fileset dir="${domain}">
+                <include name="${domain.jar}"/>
+            </fileset>
+        </copy>
+        <echo message="${engine.lib}"/>
+
+
+        <delete dir="${engine.dest.resources}bin"/>
+        <delete dir="${engine.classes}"/>
+        <echo message="########  Fusion-Engine  package successful ################"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.home}"/>
+        <mkdir dir="${build.home}"/>
+    </target>
+
+    <target name="clean_base">
+        <delete dir="${common}"/>
+        <delete dir="${domain}"/>
+    </target>
+</project>

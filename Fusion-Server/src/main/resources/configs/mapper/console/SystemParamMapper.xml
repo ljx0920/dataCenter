@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fusion.manage.mapper.console.SystemParamMapper">
+    <resultMap id="BaseResultMap" type="com.fusion.manage.entity.console.SystemParam">
+        <id column="id" property="id" jdbcType="CHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="system_param_catalog_id" property="systemParamCatalogId" jdbcType="CHAR"/>
+        <result column="system_key" property="systemKey" jdbcType="VARCHAR"/>
+        <result column="system_value" property="systemValue" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Table_Name">
+        CS_SYSTEM_PARAM
+    </sql>
+
+    <sql id="Base_Column_List">
+        id, name, system_param_catalog_id, system_key, system_value, create_date
+    </sql>
+
+    <!--新增操作 -->
+    <insert id="save" parameterType="com.fusion.manage.entity.console.SystemParam" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into
+        <include refid="Table_Name"/>
+        (<include refid="Base_Column_List"/>)
+        values
+        (#{id},#{name},#{systemParamCatalogId},#{systemKey},#{systemValue},now())
+    </insert>
+
+    <!--根据ID查询-->
+    <select id="findById" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        where id = #{id}
+    </select>
+
+    <!--根据ID查询-->
+    <select id="getValueByKey" resultType="String" parameterType="String">
+        select system_value
+        from
+        <include refid="Table_Name"/>
+        where system_key = #{systemKey}
+    </select>
+
+    <!--获取数据总数-->
+    <select id="getCount" parameterType="java.util.Map" resultType="int">
+        select count(1) from
+        <include refid="Table_Name"/>
+        where 1=1
+        <include refid="sql_query"/>
+    </select>
+
+    <!-- 查询所有数据-->
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        ORDER BY `create_date` DESC
+    </select>
+
+    <!-- 通过条件查询所有数据-->
+    <select id="findByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        where 1=1
+        <include refid="sql_query"/>
+        ORDER BY `create_date` DESC
+    </select>
+
+    <!--分组分页查询-->
+    <select id="findByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Table_Name"/>
+        where 1=1
+        <include refid="sql_query"/>
+        order by create_date desc
+        limit #{startRowNum}, #{pageSize}
+    </select>
+
+    <!--更新-->
+    <update id="update" parameterType="com.fusion.manage.entity.console.SystemParam">
+        update
+        <include refid="Table_Name"/>
+        <include refid="sql_update"/>
+        where id = #{id}
+    </update>
+
+    <!--根据ID删除-->
+    <delete id="deleteById" parameterType="String">
+        delete from
+        <include refid="Table_Name"/>
+        where id = #{id}
+    </delete>
+
+    <sql id="sql_query">
+        <if test="name != null and name != '' ">
+            <![CDATA[
+					and name = #{name}
+				]]>
+        </if>
+        <if test="systemParamCatalogId != null">
+            <![CDATA[
+					and system_param_catalog_id = #{systemParamCatalogId}
+                   ]]>
+        </if>
+        <if test="systemKey != null and systemKey != '' ">
+            <![CDATA[
+					and system_key = #{systemKey}
+				]]>
+        </if>
+        <if test="systemValue != null and systemValue != '' ">
+            <![CDATA[
+					and system_value = #{systemValue}
+				]]>
+        </if>
+    </sql>
+
+    <!--更新操作-->
+    <sql id="sql_update">
+        <set>
+            <if test="name != null and name != '' ">
+                <![CDATA[
+					name = #{name},
+				]]>
+            </if>
+            <if test="systemParamCatalogId != null">
+                <![CDATA[
+					 system_param_catalog_id = #{systemParamCatalogId},
+                   ]]>
+            </if>
+            <if test="systemKey != null and systemKey != '' ">
+                <![CDATA[
+					 system_key = #{systemKey},
+				]]>
+            </if>
+            <if test="systemValue != null and systemValue != '' ">
+                <![CDATA[
+					 system_value = #{systemValue},
+				]]>
+            </if>
+        </set>
+    </sql>
+    
+</mapper>

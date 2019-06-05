@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+    <aop:config proxy-target-class="true"></aop:config>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager" />
+    </bean>
+    <!--menuProvider-->
+    <dubbo:reference id="menuProvider" interface="com.fusion.manage.provider.console.MenuProvider"/>
+
+    <!--userProvider-->
+    <dubbo:reference id="userProvider" interface="com.fusion.manage.provider.console.UserProvider"/>
+
+    <!--systemParamProvider-->
+    <dubbo:reference id="systemParamProvider" interface="com.fusion.manage.provider.console.SystemParamProvider"/>
+
+    <!--systemParamCatalogProvider-->
+    <dubbo:reference id="systemParamCatalogProvider" interface="com.fusion.manage.provider.console.SystemParamCatalogProvider"/>
+
+</beans>

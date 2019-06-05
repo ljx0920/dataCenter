@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fusion.manage.mapper.console.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.fusion.manage.entity.console.Menu">
+        <id column="id" property="id" jdbcType="CHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="CHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Table_Name">
+        CS_MENU
+    </sql>
+
+    <sql id="Base_Column_List">
+        id, parent_id, image, url, name, level, create_date
+    </sql>
+
+    <!--新增操作 -->
+    <insert id="save" parameterType="com.fusion.manage.entity.console.Menu" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id">
+        insert into
+        <include refid="Table_Name"/>
+        (<include refid="Base_Column_List"/>)
+        values
+        (#{id},#{parentId},#{image},#{url},#{name},#{level},now())
+    </insert>
+
+    <!--根据ID查询-->
+    <select id="findById" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        where id = #{id}
+    </select>
+
+    <!--获取数据总数-->
+    <select id="getCount" parameterType="java.util.Map" resultType="int">
+        select count(1) from
+        <include refid="Table_Name"/>
+        where 1=1
+        <include refid="sql_query"/>
+    </select>
+
+    <!-- 查询所有数据(带上级菜单名称)-->
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        ORDER BY parent_id ASC, `level` ASC
+    </select>
+
+    <!-- 通过条件查询所有数据-->
+    <select id="findByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        where 1=1
+        <include refid="sql_query"/>
+        ORDER BY `level` ASC
+    </select>
+
+    <!--分组分页查询-->
+    <select id="findByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Table_Name"/>
+        where 1=1
+        <include refid="sql_query"/>
+        ORDER BY `create_date` DESC
+        limit #{startRowNum}, #{pageSize}
+    </select>
+
+    <!--更新-->
+    <update id="update" parameterType="com.fusion.manage.entity.console.Menu">
+        update
+        <include refid="Table_Name"/>
+        <include refid="sql_update"/>
+        where id = #{id}
+    </update>
+
+    <!--根据ID删除-->
+    <delete id="deleteById" parameterType="String">
+        delete from
+        <include refid="Table_Name"/>
+        where id = #{id}
+    </delete>
+
+    <sql id="sql_query">
+        <if test="parentId != null">
+            <![CDATA[
+					and parent_id = #{parentId}
+                   ]]>
+        </if>
+        <if test="level != null">
+            <![CDATA[
+					and level = #{level}
+				]]>
+        </if>
+        <if test="name != null and name != '' ">
+            <![CDATA[
+					and name = #{name}
+				]]>
+        </if>
+        <if test="url != null and url != '' ">
+            <![CDATA[
+					and url = #{url}
+				]]>
+        </if>
+        <if test="image != null and image != '' ">
+            <![CDATA[
+					and image = #{image}
+				]]>
+        </if>
+    </sql>
+
+    <!--更新操作-->
+    <sql id="sql_update">
+        <set>
+            <if test="parentId != null">
+                <![CDATA[
+					parent_id = #{parentId},
+                   ]]>
+            </if>
+            <if test="level != null">
+                <![CDATA[
+					level = #{level},
+				]]>
+            </if>
+            <if test="name != null and name != '' ">
+                <![CDATA[
+					name = #{name},
+				]]>
+            </if>
+            <if test="url != null and url != '' ">
+                <![CDATA[
+					url = #{url},
+				]]>
+            </if>
+            <if test="image != null and image != '' ">
+                <![CDATA[
+					image = #{image},
+				]]>
+            </if>
+        </set>
+    </sql>
+
+</mapper>

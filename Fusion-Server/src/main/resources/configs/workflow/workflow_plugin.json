@@ -1,0 +1,175 @@
+[
+  {
+    "name": "基础插件",
+    "isParent": true,
+    "open": false,
+    "children": [
+      {
+        "name": "选择指针",
+        "code": "cursor",
+        "type": "pointer"
+      },
+      {
+        "name": "节点连线",
+        "code": "direct",
+        "type": "line"
+      },
+      {
+        "name": "开始",
+        "code": "start",
+        "type": "startNode"
+      },
+      {
+        "name": "结束",
+        "code": "end",
+        "type": "endNode"
+      },   {
+        "name": "分支",
+        "code": "branch",
+        "type": "forkNode"
+      },
+      {
+        "name": "聚合",
+        "code": "aggregation",
+        "type": "joinNode"
+      }
+    ]
+  },
+  {
+    "name": "DB",
+    "isParent": true,
+    "open": false,
+    "children": [
+      {
+        "name": "DBSelect",
+        "code": "db_select",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "DBInsert",
+        "code": "db_insert",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "DBUpdata",
+        "code": "db_updata",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "DBDelete",
+        "code": "db_delete",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      }
+    ]
+  },
+  {
+    "name": "HTTP",
+    "isParent": true,
+    "open": false,
+    "children": [
+      {
+        "name": "RestFulGet",
+        "code": "restful_get",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "RestFulPost",
+        "code": "restful_post",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "WebService",
+        "code": "webservice",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      }
+    ]
+  },
+  {
+  "name": "API",
+  "isParent": true,
+  "open": false,
+  "children": [
+      {
+        "name": "SystemAPI",
+        "code": "api_system",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "NewAPI",
+        "code": "api_new",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      }
+    ]
+  },
+  {
+    "name": "Transform",
+    "isParent": true,
+    "open": false,
+    "children": [
+      {
+        "name": "JsonToMap",
+        "code": "json_map",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "MapToJson",
+        "code": "map_json",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "MapToXML",
+        "code": "map_xml",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "XMLToMap",
+        "code": "xml_map",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      }
+    ]
+  },
+  {
+    "name": "Rule",
+    "isParent": true,
+    "open": false,
+    "children": [
+      {
+        "name": "SQLScript",
+        "code": "process_mapping",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "rule_sql"
+      },
+      {
+        "name": "JavaFn",
+        "code": "rule_java",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "PyFn",
+        "code": "rule_python",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      },
+      {
+        "name": "JavaScript",
+        "code": "rule_javaScript",
+        "activityClass": "com.etl.workflow.plugin.SparkNodeAction",
+        "type": "flowNode"
+      }
+    ]
+  }
+]

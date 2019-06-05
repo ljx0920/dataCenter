@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Fusion-Common/Fusion-Common.iml" filepath="$PROJECT_DIR$/Fusion-Common/Fusion-Common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fusion-Domain/Fusion-Domain.iml" filepath="$PROJECT_DIR$/Fusion-Domain/Fusion-Domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fusion-Engine/Fusion-Engine.iml" filepath="$PROJECT_DIR$/Fusion-Engine/Fusion-Engine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fusion-Restful/Fusion-Restful.iml" filepath="$PROJECT_DIR$/Fusion-Restful/Fusion-Restful.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fusion-Server/Fusion-Server.iml" filepath="$PROJECT_DIR$/Fusion-Server/Fusion-Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fusion-Stage.iml" filepath="$PROJECT_DIR$/Fusion-Stage.iml" />
+    </modules>
+  </component>
+</project>

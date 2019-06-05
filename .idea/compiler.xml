@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Fusion-Common" />
+        <module name="Fusion-Domain" />
+        <module name="Fusion-Engine" />
+        <module name="Fusion-Restful" />
+        <module name="Fusion-Server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Fusion-Common" target="1.8" />
+      <module name="Fusion-Domain" target="1.8" />
+      <module name="Fusion-Engine" target="1.8" />
+      <module name="Fusion-Restful" target="1.8" />
+      <module name="Fusion-Server" target="1.8" />
+      <module name="Fusion-Stage" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Fusion-Common" options="-parameters" />
+      <module name="Fusion-Domain" options="-parameters" />
+      <module name="Fusion-Engine" options="-parameters" />
+      <module name="Fusion-Restful" options="-parameters" />
+      <module name="Fusion-Server" options="-parameters" />
+    </option>
+  </component>
+</project>
